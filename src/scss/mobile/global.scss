@@ -1,0 +1,6 @@
+body {
+	background : $bg-color;
+	font-family:$font;
+	@include smoothIt;
+	letter-spacing:1px;
+}

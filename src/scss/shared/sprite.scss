@@ -1,0 +1,23 @@
+$values: (
+  sprite-example: (
+    src: '../img/sprite/sprite.png',
+    x: 0px,
+    y: 0px,
+    width: 500px,
+    height: 500px,
+    spriteWidth: 500px,
+    spriteHeight: 500px
+  ),
+);
+
+@mixin sprite($img, $pixel-ratio: 1) {
+  background-image:url(map-get(map-get($values, $img), src));
+  background-position:map-get(map-get($values, $img), x) map-get(map-get($values, $img), y);
+  width:map-get(map-get($values, $img), width);
+  height:map-get(map-get($values, $img), height);
+  background-size:map-get(map-get($values, $img), spriteWidth) / $pixel-ratio map-get(map-get($values, $img), spriteHeight) / $pixel-ratio;
+}
+
+
+
+

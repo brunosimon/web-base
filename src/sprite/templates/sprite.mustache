@@ -1,0 +1,32 @@
+{
+  // Default options
+  'functions': true
+}
+
+$values: (
+{{#items}}
+  {{name}}: (
+    src: '{{{escaped_image}}}',
+    x: {{px.offset_x}},
+    y: {{px.offset_y}},
+    width: {{px.width}},
+    height: {{px.height}},
+    spriteWidth: {{total_width}}px,
+    spriteHeight: {{total_height}}px
+  ),
+{{/items}}
+);
+
+{{#options.functions}}
+@mixin sprite($img, $pixel-ratio: 1) {
+  background-image:url(map-get(map-get($values, $img), src));
+  background-position:map-get(map-get($values, $img), x) map-get(map-get($values, $img), y);
+  width:map-get(map-get($values, $img), width);
+  height:map-get(map-get($values, $img), height);
+  background-size:map-get(map-get($values, $img), spriteWidth) / $pixel-ratio map-get(map-get($values, $img), spriteHeight) / $pixel-ratio;
+}
+{{/options.functions}}
+
+
+
+

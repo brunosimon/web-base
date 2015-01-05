@@ -1,0 +1,13 @@
+{
+	"title": "Works page",
+	"works": [
+		{
+			"title": "Blank",
+			"path": "/blank"
+		},
+		{
+			"title": "Malakoff",
+			"path": "/malakoff"
+		}
+	]
+}

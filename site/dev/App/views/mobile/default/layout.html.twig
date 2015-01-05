@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html><!--<![endif]-->
+<head>
+	{{ include('mobile/partials/head.html.twig') }}
+</head>
+
+<div class="ajaxContainer" id="part-{{ route.view }}">
+{% block content %}{% endblock %}
+</div>
+
+{{ include('mobile/partials/foot.html.twig') }}

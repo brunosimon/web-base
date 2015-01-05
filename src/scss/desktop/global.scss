@@ -1,0 +1,21 @@
+html,
+html a {
+	//-webkit-font-smoothing: antialiased;
+    //text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+body {
+	background : $bg-color;
+	font:700 15px/23px $font-family;
+	text-transform:uppercase;
+	letter-spacing:1.5px;
+}
+
+.ajaxContainer {
+	overflow:hidden;
+	position:relative;
+}
+
+.screen {
+	position:relative;
+}

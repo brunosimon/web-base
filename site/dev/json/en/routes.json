@@ -1,0 +1,21 @@
+{
+	"works": {
+		"view": "works",
+
+		"blank": {
+			"view": "blank",
+			"service": "::"
+		}
+	},
+	"blog": {
+		"view": "blog",
+		"service": "::",
+		"childs": {
+			"view": "blogArticle",
+			"service": "::"
+		}
+	},
+	"about": {
+		"view": "about"
+	}
+}

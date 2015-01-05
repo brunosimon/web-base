@@ -1,0 +1,75 @@
+{
+
+	"src": "src/",
+	"dest": "dev/",
+	"dist": "bin/",
+
+	"coffee": [
+		{
+			"src": [
+				"coffee/shared/data/**/*.coffee",
+				"coffee/shared/libs/**/*.coffee",
+				"coffee/shared/**/*.coffee",
+				"coffee/desktop/**/*.coffee"
+			],
+			"dest": "js/desktop",
+			"filename": "script.coffee"
+		}
+	],
+
+	"js": [
+		{
+			"src": [
+				"js/shared/libs/jquery/jquery-2.1.1.min.js",
+				"js/shared/libs/**/*.js",
+				"js/desktop/script.js"
+			],
+			"dest": "dev/assets/js",
+			"filename": "script.js"
+		}
+	],
+
+	"sass": [
+		{
+			"src": ["scss/style.scss"],
+			"dest": "dev/assets/css"
+		},
+		{
+			"src": ["scss/style.ui.scss"],
+			"dest": "dev/assets/css"
+		}
+	],
+
+	"sprite": [
+		{
+			"type": "png",
+			"src": ["sprite/x1/**/*.png"],
+			"dest": "assets/img/sprite",
+			"template": "sprite/templates/sprite.mustache",
+			"filename": "sprite.png",
+			"stylename": "sprite.scss"
+		}
+	],
+
+	"favicons": {
+		"src": "favicons/",
+		"dest": "dev/assets/favicons/",
+		"type": [
+			{
+				"name": "apple-touch-icon",
+				"ext": ".png",
+				"sizes": [16, 32, 96, 160, 192]
+			},
+			{
+				"name": "favicon",
+				"ext": ".png",
+				"sizes": [57, 60, 72, 76, 114, 120, 144, 152, 180]
+			},
+			{
+				"name": "ms-tile",
+				"ext": ".png",
+				"sizes": [144]
+			}
+		]
+	}
+}
