@@ -73,4 +73,28 @@
         return $out;
     }
 
+    function replaceSrcAttributes($content, $imgPath)
+    {   
+        if (substr($content, 0, 5) == 'site:'){
+            $path = explode('/', $content);
+            $filename = $path[count($path) - 1];
+            $content = $imgPath . $filename;
+        } else {
+            $pattern = '/(src=["\'])([^"\']+)(["\'])/';
+            $content = preg_replace_callback(
+                $pattern,
+                function($matches) use ($imgPath)
+                {
+                    $path = explode('/', $matches[2]);
+                    $filename = $path[count($path) - 1];
+
+                    return 'src="' . $imgPath . $filename . '"';
+                }, 
+                $content
+            );
+        }
+
+        return $content;
+    }
+
 //}

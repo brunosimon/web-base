@@ -2,13 +2,11 @@
 
 $fontPath : '../fonts/';
 
-@include importFont('Crimson Text', 'crimson-text-bold', 700, normal, $fontPath);
-@include importFont('Crimson Text', 'crimson-text-regular', 400, normal, $fontPath);
-@include importFont('Futura', 'futura-bold', 700, normal, $fontPath);
-@include importFont('Futura', 'futura-bold-demi', 600, normal, $fontPath);
+@include importFont('Open Sans', 'OpenSans-Bold', 400, normal, $fontPath);
+@include importFont('Open Sans', 'OpenSans-Regular', 700, normal, $fontPath);
 
-$font-family: 'Futura', 'Helvetica', sans-serif;
-$font-text: 'Crimson Text', 'Times', serif;
+$font-family: 'Open Sans', 'Helvetica', sans-serif;
+$font-text: 'Open Sans', 'Times', serif;
 
 
 // -------------------------o Imports colors
@@ -16,14 +14,7 @@ $font-text: 'Crimson Text', 'Times', serif;
 $white 				: #FFFFFF;
 $black 				: #000000;
 
-$blue				: #a0eff0;
-$yellow				: #fff000;
-$purple				: #952bf9;
-$green 				: #2de45c;
-$red 				: #f24c46;
-
-$grey-white 		: #F7F7F7;
-$grey-middle 		: #989797;
+$grey-white			: #F7F7F7;
 
 $bg-color 			: $grey-white;
 
@@ -32,9 +23,9 @@ $bg-color 			: $grey-white;
 // -------------------------o Others
 
 .no-transition {
-	@include transition(all 0ms $linear 0ms !important);
+	transition:all 0ms $linear 0ms !important;
 
 	* {
-		@include transition(all 0ms $linear 0ms !important);
+		transition:all 0ms $linear 0ms !important;
 	}
 }

@@ -3,11 +3,11 @@
 	"works": [
 		{
 			"title": "Blank",
-			"path": "/blank"
+			"path": "/works/blank"
 		},
 		{
 			"title": "Malakoff",
-			"path": "/malakoff"
+			"path": "/works/malakoff"
 		}
 	]
 }

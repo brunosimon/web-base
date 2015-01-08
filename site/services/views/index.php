@@ -23,6 +23,11 @@
 				else if (!isset($post[$propNoLang])) {
 					$post[$prop] = $value;
 				}
+
+				if (isset($post[$prop]) && preg_match('/site:|src="/', $post[$prop])){
+					$post[$prop] = replaceSrcAttributes($post[$prop], UPLOADS . '/');
+				}
+
 			}
 
 			$post['path'] = $lang . '/' . strtolower($collection) . '/' . stringToNiceUrl($post['title']);

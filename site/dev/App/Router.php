@@ -22,19 +22,28 @@ class Router {
                 $this->app->redirect('/' . DEFAULT_LANGUAGE);
             }
         }
-        
-        $route = $this->getRoute();
+
+        $viewFolder = $this->getViewFolder();
+
+        if ($viewFolder == 'old'){
+            if (count($this->params) > 0){
+                $this->app->redirect('/' . $this->lang);
+            }
+            $route = (object) array('view' => 'index', 'type' => 'old');
+        }
+        else {
+            $route = $this->getRoute();
+        }
+
         $global = $this->getGlobalData();
         $content = $this->getContent($route);
-        $device = $this->getDevice();
-
 
         $this->data = array(
             'lang' => $this->lang,
             'content' => $content,
             'global' => $global,
             'route' => $route,
-            'device' => $device
+            'viewFolder' => $viewFolder
         );
 
         $this->setGlobalVariables();
@@ -137,30 +146,35 @@ class Router {
 
     public function getContent($route)
     {
-        $routeParams = $this->params;
 
         $path = '';
         $content = (object) array();
-        $longPath = "json" . $this->rootPath . implode('/', $routeParams) ."/content.json";
-        $filename = array_pop($routeParams);
-        $shortPath = "json" . $this->rootPath . implode('/', $routeParams) . $filename . ".json";
 
-        if (isset($route->service) && $route->service != ''){
-            if ($route->service == '::'){
-                $path = SERVICES . '/';
-                if (MULTILINGUAL){
-                    $path .= $this->lang . '/';
+        if (isset($route->type) && $route->type == 'old'){
+            $path =  "json" . $this->rootPath . "old.json";
+        } else {
+            $routeParams = $this->params;
+            $longPath = "json" . $this->rootPath . implode('/', $routeParams) ."/content.json";
+            $filename = array_pop($routeParams);
+            $shortPath = "json" . $this->rootPath . implode('/', $routeParams) . "/" . $filename . ".json";
+
+            if (isset($route->service) && $route->service != ''){
+                if ($route->service == '::'){
+                    $path = SERVICES . '/';
+                    if (MULTILINGUAL){
+                        $path .= $this->lang . '/';
+                    }
+                    $path .= implode('/', $this->params);
+                    $content->data = json_decode($this->getDataFromURL($path)); 
                 }
-                $path .= implode('/', $this->params);
-                $content->data = json_decode(file_get_contents($path)); 
             }
-        }
 
-        if (file_exists($longPath)) {
-            $path = $longPath;
-        }
-        else if (file_exists($shortPath)) {
-            $path = $shortPath;
+            if (file_exists($longPath)) {
+                $path = $longPath;
+            }
+            else if (file_exists($shortPath)) {
+                $path = $shortPath;
+            }
         }
 
         if ($path != '' && file_exists($path)){
@@ -170,23 +184,29 @@ class Router {
         return $content;
     }
 
-    public function getDevice()
+    public function getViewFolder()
     {
-        $detect = new Mobile_Detect;
 
-        $device = 'desktop';
+        $viewFolder = 'desktop';
 
-        $isMobile = $detect->isMobile();
-        $isTablet = $detect->isTablet();
 
-        if (MOBILE_SUPPORT && $isMobile && !$isTablet) {
-            $device = 'mobile';
+        if(preg_match('/(?i)msie [1-8]/', $_SERVER['HTTP_USER_AGENT']) /*|| strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0; rv:11.0') !== false*/){
+            $viewFolder = 'old';
         }
-        else if (TABLET_SUPPORT && $isTablet) {
-            $device = 'tablet';
+        else {
+            $detect = new Mobile_Detect;
+            $isMobile = $detect->isMobile();
+            $isTablet = $detect->isTablet();
+
+            if (MOBILE_SUPPORT && $isMobile && !$isTablet) {
+                $viewFolder = 'mobile';
+            }
+            else if (TABLET_SUPPORT && $isTablet) {
+                $viewFolder = 'tablet';
+            }
         }
 
-        return $device;
+        return $viewFolder;
 
     }
 
@@ -200,6 +220,17 @@ class Router {
         $this->data['domain'] = DOMAIN;
         $this->data['root_web'] = ROOT_WEB;
 
+    }
+
+    public function getDataFromURL($url)
+    {   
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);  
+
+        return $output;
     }
 
 }

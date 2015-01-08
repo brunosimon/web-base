@@ -1,129 +1,33 @@
-var App, Carousel, Event, Loader, Page, Router, Scroll, SocialSharing, Transitions, UI_Slider, Utils, VideoPlayer, VideoPlayer_Controls, VideoPlayer_HTML, VideoPlayer_Templates, W,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var About, App, Carousel, Event, Loader, Normalize, Page, Router, Scroll, SocialSharing, Transitions, UI_Slider, Utils, VideoPlayer, VideoPlayer_Controls, VideoPlayer_HTML, VideoPlayer_Templates, W,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Event = (function() {
-  function Event() {}
+SocialSharing = (function() {
+  function SocialSharing() {
+    this._onLinkClick = __bind(this._onLinkClick, this);
+    this._initEvents = __bind(this._initEvents, this);
+    this.links = $('.social-link');
+    this._initEvents();
+  }
 
-  Event.MOUSEDOWN = $('body').hasClass('tablet') ? 'touchstart' : 'mousedown';
-
-  Event.MOUSEUP = $('body').hasClass('tablet') ? 'touchend' : 'mouseup';
-
-  Event.MOUSEMOVE = $('body').hasClass('tablet') ? 'touchmove' : 'mousemove';
-
-  Event.CLICK = $('body').hasClass('tablet') ? 'touchstart' : 'click';
-
-  Event.ENTER = $('body').hasClass('tablet') ? 'touchstart' : 'mouseenter';
-
-  Event.KEYDOWN = 'keydown';
-
-  Event.WHEEL = 'mousewheel';
-
-  Event.LOADED = 'loaded';
-
-  Event.STEPS = 'steps';
-
-  Event.SUBMIT = 'submit';
-
-  return Event;
-
-})();
-
-Utils = (function() {
-  function Utils() {}
-
-  Utils.getCoverSizeImage = function(picWidth, picHeight, containerWidth, containerHeight) {
-    var ch, cr, cw, ph, pr, pw;
-    pw = picWidth;
-    ph = picHeight;
-    cw = containerWidth || W.ww;
-    ch = containerHeight || W.wh;
-    pr = pw / ph;
-    cr = cw / ch;
-    if (cr < pr) {
-      return {
-        'width': ch * pr,
-        'height': ch,
-        'top': 0,
-        'left': -((ch * pr) - cw) * 0.5
-      };
-    } else {
-      return {
-        'width': cw,
-        'height': cw / pr,
-        'top': -((cw / pr) - ch) * 0.5,
-        'left': 0
-      };
-    }
+  SocialSharing.prototype._initEvents = function() {
+    return $(document).on(Event.CLICK, '.social-link', this._onLinkClick);
   };
 
-  Utils.getContainSizeImage = function(picWidth, picHeight, containerWidth, containerHeight) {
-    var ch, cr, cw, ph, pr, pw;
-    pw = picWidth;
-    ph = picHeight;
-    cw = containerWidth || W.ww;
-    ch = containerHeight || W.wh;
-    pr = pw / ph;
-    cr = cw / ch;
-    if (cr < pr) {
-      return {
-        'width': cw,
-        'height': cw / pr,
-        'top': (ch - cw / pr) * 0.5,
-        'left': 0
-      };
-    } else {
-      return {
-        'width': ch * pr,
-        'height': ch,
-        'top': 0,
-        'left': (cw - ch * pr) * 0.5
-      };
-    }
+  SocialSharing.prototype._onLinkClick = function(e) {
+    var height, leftPosition, link, options, topPosition, width, windowFeatures;
+    e.preventDefault();
+    link = $(e.currentTarget).attr('href');
+    width = 800;
+    height = 500;
+    leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+    topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+    options = windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+    return window.open(link, 'Withings Activité', options);
   };
 
-  Utils.clearTimers = function(timers) {
-    return $.each(timers, function(key, timer) {
-      return clearTimeout(timer);
-    });
-  };
-
-  Utils.hexToRgb = function(hex) {
-    var result;
-    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (result) {
-      return {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      };
-    } else {
-      return null;
-    }
-  };
-
-  return Utils;
-
-})();
-
-W = (function() {
-  function W() {}
-
-  W.init = function() {
-    W.window = $(window);
-    W.body = $('body');
-    W.device = $('body').attr('class');
-    W.ww = $(window).width();
-    W.wh = $(window).height();
-    W.sw = screen.width;
-    W.sh = screen.height;
-    W.scrollTop = {
-      real: 0,
-      calc: 0
-    };
-    return W.isTablet = $('body').hasClass('tablet') ? true : false;
-  };
-
-  return W;
+  return SocialSharing;
 
 })();
 
@@ -418,6 +322,7 @@ Router = (function() {
       })(this),
       error: (function(_this) {
         return function(response) {
+          console.log(response);
           return $(_this).trigger(Router.CALLERROR);
         };
       })(this)
@@ -1487,44 +1392,192 @@ VideoPlayer_Templates = (function() {
 
 })();
 
-SocialSharing = (function() {
-  function SocialSharing() {
-    this._onLinkClick = __bind(this._onLinkClick, this);
+Event = (function() {
+  function Event() {}
+
+  Event.MOUSEDOWN = $('body').hasClass('tablet') ? 'touchstart' : 'mousedown';
+
+  Event.MOUSEUP = $('body').hasClass('tablet') ? 'touchend' : 'mouseup';
+
+  Event.MOUSEMOVE = $('body').hasClass('tablet') ? 'touchmove' : 'mousemove';
+
+  Event.CLICK = $('body').hasClass('tablet') ? 'touchstart' : 'click';
+
+  Event.ENTER = $('body').hasClass('tablet') ? 'touchstart' : 'mouseenter';
+
+  Event.KEYDOWN = 'keydown';
+
+  Event.WHEEL = 'mousewheel';
+
+  Event.LOADED = 'loaded';
+
+  Event.STEPS = 'steps';
+
+  Event.SUBMIT = 'submit';
+
+  return Event;
+
+})();
+
+Page = (function() {
+  function Page() {
+    this.destroy = __bind(this.destroy, this);
+    this.update = __bind(this.update, this);
+    this.resize = __bind(this.resize, this);
     this._initEvents = __bind(this._initEvents, this);
-    this.links = $('.social-link');
+    this._initContent = __bind(this._initContent, this);
+    var name;
+    name = this.constructor.name;
+    console.log('%c# --------------------o Initialize Class ' + name, 'background: #e1e342; color: #0F0F0F;');
+    this._initContent();
     this._initEvents();
   }
 
-  SocialSharing.prototype._initEvents = function() {
-    return $(document).on(Event.CLICK, '.social-link', this._onLinkClick);
+  Page.prototype._initContent = function() {
+    return this.container = $('#part-' + name.charAt(0).toLowerCase() + name.slice(1));
   };
 
-  SocialSharing.prototype._onLinkClick = function(e) {
-    var height, leftPosition, link, options, topPosition, width, windowFeatures;
-    e.preventDefault();
-    link = $(e.currentTarget).attr('href');
-    width = 800;
-    height = 500;
-    leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
-    topPosition = (window.screen.height / 2) - ((height / 2) + 50);
-    options = windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
-    return window.open(link, 'Withings Activité', options);
+  Page.prototype._initEvents = function() {};
+
+  Page.prototype.resize = function() {};
+
+  Page.prototype.update = function() {};
+
+  Page.prototype.destroy = function() {
+    var name;
+    name = this.constructor.name;
+    return console.log('%c# --------------------o Destroy Class ' + name, 'background: #e3b042; color: #0F0F0F;');
   };
 
-  return SocialSharing;
+  return Page;
+
+})();
+
+W = (function() {
+  function W() {}
+
+  W.init = function() {
+    W.window = $(window);
+    W.body = $('body');
+    W.device = $('body').attr('class');
+    W.ww = $(window).width();
+    W.wh = $(window).height();
+    W.sw = screen.width;
+    W.sh = screen.height;
+    W.scrollTop = {
+      real: 0,
+      calc: 0
+    };
+    return W.isTablet = $('body').hasClass('tablet') ? true : false;
+  };
+
+  return W;
+
+})();
+
+Normalize = (function() {
+  function Normalize() {}
+
+  Normalize.transform = function(elm, transform) {
+    if (elm) {
+      elm.style.transform = transform;
+      elm.style.webkitTransform = transform;
+      return elm.style.mozTransform = transform;
+    }
+  };
+
+  Normalize.transformOrigin = function(elm, origin) {
+    if (elm) {
+      elm.style.transformOrigin = transform;
+      elm.style.webkitTransformOrigin = transform;
+      return elm.style.mozTransformOrigin = transform;
+    }
+  };
+
+  return Normalize;
+
+})();
+
+Utils = (function() {
+  function Utils() {}
+
+  Utils.getCoverSizeImage = function(picWidth, picHeight, containerWidth, containerHeight) {
+    var ch, cr, cw, ph, pr, pw;
+    pw = picWidth;
+    ph = picHeight;
+    cw = containerWidth || W.ww;
+    ch = containerHeight || W.wh;
+    pr = pw / ph;
+    cr = cw / ch;
+    if (cr < pr) {
+      return {
+        'width': ch * pr,
+        'height': ch,
+        'top': 0,
+        'left': -((ch * pr) - cw) * 0.5
+      };
+    } else {
+      return {
+        'width': cw,
+        'height': cw / pr,
+        'top': -((cw / pr) - ch) * 0.5,
+        'left': 0
+      };
+    }
+  };
+
+  Utils.getContainSizeImage = function(picWidth, picHeight, containerWidth, containerHeight) {
+    var ch, cr, cw, ph, pr, pw;
+    pw = picWidth;
+    ph = picHeight;
+    cw = containerWidth || W.ww;
+    ch = containerHeight || W.wh;
+    pr = pw / ph;
+    cr = cw / ch;
+    if (cr < pr) {
+      return {
+        'width': cw,
+        'height': cw / pr,
+        'top': (ch - cw / pr) * 0.5,
+        'left': 0
+      };
+    } else {
+      return {
+        'width': ch * pr,
+        'height': ch,
+        'top': 0,
+        'left': (cw - ch * pr) * 0.5
+      };
+    }
+  };
+
+  Utils.clearTimers = function(timers) {
+    return $.each(timers, function(key, timer) {
+      return clearTimeout(timer);
+    });
+  };
+
+  Utils.hexToRgb = function(hex) {
+    var result;
+    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (result) {
+      return {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      };
+    } else {
+      return null;
+    }
+  };
+
+  return Utils;
 
 })();
 
 App = (function() {
   App.sections = {
-    'home': 'Home',
-    'lab': 'Lab',
-    'labArticle': 'LabArticle',
-    'history': 'History',
-    'contact': 'Contact',
-    'brands': 'Brands',
-    'test': 'Test',
-    'test2': 'Test2'
+    'about': 'About'
   };
 
   function App() {
@@ -1537,7 +1590,7 @@ App = (function() {
     this._destroySection = __bind(this._destroySection, this);
     this._initSection = __bind(this._initSection, this);
     this._initContent = __bind(this._initContent, this);
-    console.log('%c# --------------------o Running Desktop', 'background: #42e34d; color: #F0F0F0;');
+    console.log('%c# --------------------o Running Desktop', 'background: #42e34d; color: #0F0F0F;');
     W.init();
     this._initContent();
     this._initEvents();
@@ -1546,6 +1599,7 @@ App = (function() {
 
   App.prototype._initContent = function() {
     W.time = {
+      now: +new Date(),
       old: +new Date()
     };
     this.transitions = new Transitions();
@@ -1561,7 +1615,12 @@ App = (function() {
     return this._onResize();
   };
 
-  App.prototype._destroySection = function() {};
+  App.prototype._destroySection = function() {
+    if (this.section) {
+      this.section.destroy();
+    }
+    return this.section = void 0;
+  };
 
   App.prototype._initEvents = function() {
     W.window.on('resize', this._onResize);
@@ -1608,148 +1667,13 @@ $(function() {
   })();
 });
 
-Page = (function() {
-  function Page() {
-    this.update = __bind(this.update, this);
-    this.resize = __bind(this.resize, this);
-    this._onMouseWheel = __bind(this._onMouseWheel, this);
-    this._goToScreen = __bind(this._goToScreen, this);
-    this._nextScreen = __bind(this._nextScreen, this);
-    this._prevScreen = __bind(this._prevScreen, this);
-    this._initEvents = __bind(this._initEvents, this);
-    this._initContent = __bind(this._initContent, this);
-    var name;
-    name = this.constructor.name;
-    this.container = $('#part-' + name.charAt(0).toLowerCase() + name.slice(1));
-    this._initContent();
-    this._initEvents();
+About = (function(_super) {
+  __extends(About, _super);
+
+  function About() {
+    About.__super__.constructor.apply(this, arguments);
   }
 
-  Page.prototype._initContent = function() {
-    this.screensContainer = this.container.find('.screens');
-    if (this.screensContainer.length === 1) {
-      this.screensEnabled = true;
-      this.viewport = this.screensContainer.children('.viewport');
-      this.screens = this.screensContainer.find('.screen');
-      this.currentScreenIndex = 0;
-      this.screensNumber = this.screens.length;
-      this.pItems = [];
-      this.container.find('.pItem').each((function(_this) {
-        return function(key, elm) {
-          var item;
-          item = {};
-          item.elm = $(elm);
-          item.top = item.elm.position().top;
-          item.left = item.elm.position().left;
-          item.parentTop = item.elm.parents('.screen').position().top;
-          item.parentLeft = item.elm.parents('.screen').position().left;
-          item.transform = item.elm.attr('data-parallax');
-          item.perc = 0;
-          return _this.pItems.push(item);
-        };
-      })(this));
-      this.deltaMax = null;
-      this.scrolling = false;
-      this.pos = {
-        current: 0,
-        dest: 0,
-        prev: 0,
-        perc: 0,
-        max: this.viewport.height() - W.wh
-      };
-      return this.ease = 0.05;
-    }
-  };
+  return About;
 
-  Page.prototype._initEvents = function() {
-    if (this.screensEnabled === true) {
-      return $('body').on('mousewheel', this._onMouseWheel);
-    }
-  };
-
-  Page.prototype._prevScreen = function() {
-    if (this.currentScreenIndex > 0) {
-      return this._goToScreen(this.currentScreenIndex - 1);
-    }
-  };
-
-  Page.prototype._nextScreen = function() {
-    if (this.currentScreenIndex < this.screensNumber - 1) {
-      return this._goToScreen(this.currentScreenIndex + 1);
-    }
-  };
-
-  Page.prototype._goToScreen = function(index) {
-    this.currentScreenIndex = index;
-    return this.pos.dest = this.currentScreenIndex * W.wh;
-  };
-
-  Page.prototype._onMouseWheel = function(e) {
-    if (Math.abs(e.deltaY) > 30) {
-      if (this.deltaMax === null) {
-        this.deltaMax = Math.abs(e.deltaY);
-        if (e.deltaY < -30) {
-          this._nextScreen();
-        } else {
-          this._prevScreen();
-        }
-      } else if (Math.abs(e.deltaY) > this.deltaMax) {
-        this.deltaMax = Math.abs(e.deltaY);
-      }
-    } else if (this.deltaMax !== null) {
-      this.deltaMax = null;
-    }
-    return e.preventDefault();
-  };
-
-  Page.prototype.resize = function() {
-    if (this.screensEnabled) {
-      this.pos.max = this.viewport.height() - W.wh;
-      if (this.pItems.length) {
-        return $.each(this.pItems, (function(_this) {
-          return function(key, item) {
-            item.top = item.elm.position().top;
-            item.left = item.elm.position().left;
-            item.parentTop = item.elm.parents('.screen').position().top;
-            return item.parentLeft = item.elm.parents('.screen').position().left;
-          };
-        })(this));
-      }
-    }
-  };
-
-  Page.prototype.update = function() {
-    if (this.screensEnabled) {
-      this.pos.prev = this.pos.current;
-      this.pos.current += (this.pos.dest - this.pos.current) * this.ease;
-      if (this.pos.max > 0) {
-        this.pos.perc = this.pos.current / this.pos.max;
-      }
-      if (~~this.pos.prev !== ~~this.pos.current) {
-        Normalize.transform(this.viewport[0], 'translate3d(0, -' + this.pos.current + 'px, 0)');
-        return $.each(this.pItems, (function(_this) {
-          return function(key, item) {
-            var transform, vals, _ref;
-            if ((item.parentTop - W.ww < (_ref = _this.pos.current) && _ref < item.parentTop + W.ww)) {
-              item.perc = (item.parentTop - _this.pos.current) / _this.pos.max;
-              transform = item.transform;
-              vals = transform.match(/[^{}]+(?=\})/g);
-              $.each(vals, function(keyVal, val) {
-                var transformVal;
-                transformVal = item.perc * W.wh;
-                if (val.substr(0, 1) === '-') {
-                  transformVal *= -1;
-                }
-                return transform = transform.replace('{' + val + '}', transformVal);
-              });
-              return Normalize.transform(item.elm[0], transform);
-            }
-          };
-        })(this));
-      }
-    }
-  };
-
-  return Page;
-
-})();
+})(Page);

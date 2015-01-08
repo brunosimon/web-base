@@ -1,21 +1,29 @@
-html,
-html a {
-	//-webkit-font-smoothing: antialiased;
-    //text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-}
+
 
 body {
 	background : $bg-color;
-	font:700 15px/23px $font-family;
-	text-transform:uppercase;
-	letter-spacing:1.5px;
+	font:400 13px/23px $font-family;
 }
 
 .ajaxContainer {
 	overflow:hidden;
 	position:relative;
+	padding:100px 0;
 }
 
-.screen {
-	position:relative;
+// -----------------------------------------o
+
+a {
+	color:$black;
+
+	&:hover, &:active {
+		border-bottom:1px solid $black;
+	}
 }
+
+.center {
+	position:relative;
+	width:960px;
+	margin:0 auto;
+}
+

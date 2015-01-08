@@ -1,1 +1,9 @@
-404
+{% extends ajax ? "desktop/default/empty.html.twig" : "desktop/default/layout.html.twig" %}
+
+{% block content %}
+
+<div class="center">
+	404 - PAGE NOT FOUND
+</div>
+
+{% endblock %}

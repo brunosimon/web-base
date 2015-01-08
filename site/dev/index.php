@@ -30,16 +30,18 @@ $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 
 	$data = $router->getData($params);
+	$data['ajax'] = $app->request->isAjax();
 
 	if ( !isset($data['route']->view) ){
-		$app->response->setStatus(404);
-		$app->render($data['device'] . '/404.html.twig', array(), 404);
+		$statusCode = 404;
+		if ($data['ajax'] == true){
+			$statusCode = 200;
+		}
+		$app->render($data['viewFolder'] . '/404.html.twig', array(), $statusCode);
 	}
 	else {
 
-		$data['ajax'] = $app->request->isAjax();
-
-		$app->render( $data['device'] . '/' . $data['route']->view . '.html.twig', $data);
+		$app->render( $data['viewFolder'] . '/' . $data['route']->view . '.html.twig', $data);
 	}
 
 	//

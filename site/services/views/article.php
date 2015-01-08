@@ -20,6 +20,10 @@
 				$post[$prop] = $value;
 			}
 
+			if (isset($post[$prop]) && preg_match('/site:|src="/', $post[$prop])){
+				$post[$prop] = replaceSrcAttributes($post[$prop], UPLOADS . '/');
+			}
+
 			/*
 			
 			Utiliser http://php.net/manual/fr/function.strftime.php

@@ -1,8 +1,10 @@
-{% extends ajax ? "desktop/default/empty.html" : "desktop/default/layout.html.twig" %}
+{% extends ajax ? "desktop/default/empty.html.twig" : "desktop/default/layout.html.twig" %}
 
 {% block content %}
 
-<h2>{{ content.data.title }}</h2>
-<div>{{ content.data.content | raw }}</div>
+<div class="center">
+	<h1>{{ content.data.title }}</h1>
+	<div>{{ content.data.content | raw }}</div>
+</div>
 
 {% endblock %}

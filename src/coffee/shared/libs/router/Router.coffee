@@ -157,6 +157,7 @@ class Router
 
 			error: (response) =>
 
+				console.log response
 				$(@).trigger(Router.CALLERROR)
 
 		}

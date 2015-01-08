@@ -1,8 +1,8 @@
 {
 
-	"src": "src/",
-	"dest": "dev/",
-	"dist": "bin/",
+	"src": "../src/",
+	"dest": "../site/dev",
+	"dist": "../site/dev",
 
 	"coffee": [
 		{
@@ -24,7 +24,7 @@
 				"js/shared/libs/**/*.js",
 				"js/desktop/script.js"
 			],
-			"dest": "dev/assets/js",
+			"dest": "../site/dev/assets/js",
 			"filename": "script.js"
 		}
 	],
@@ -32,11 +32,7 @@
 	"sass": [
 		{
 			"src": ["scss/style.scss"],
-			"dest": "dev/assets/css"
-		},
-		{
-			"src": ["scss/style.ui.scss"],
-			"dest": "dev/assets/css"
+			"dest": "../site/dev/assets/css"
 		}
 	],
 
@@ -44,8 +40,8 @@
 		{
 			"type": "png",
 			"src": ["sprite/x1/**/*.png"],
-			"dest": "assets/img/sprite",
-			"template": "sprite/templates/sprite.mustache",
+			"dest": "../site/dev/assets/img/sprite",
+			"cssDest": "scss/desktop/",
 			"filename": "sprite.png",
 			"stylename": "sprite.scss"
 		}
@@ -53,7 +49,7 @@
 
 	"favicons": {
 		"src": "favicons/",
-		"dest": "dev/assets/favicons/",
+		"dest": "../site/dev/assets/favicons/",
 		"type": [
 			{
 				"name": "apple-touch-icon",

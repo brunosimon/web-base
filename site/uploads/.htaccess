@@ -1,0 +1,6 @@
+Options +FollowSymLinks -MultiViews
+# Turn mod_rewrite on
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^/(.+?)/?$ http://manage.base/$1 [P,L,NC]

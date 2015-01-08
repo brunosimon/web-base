@@ -1,19 +1,12 @@
 class App
 
 	@sections: {
-		'home': 'Home'
-		'lab': 'Lab'
-		'labArticle': 'LabArticle'
-		'history': 'History'
-		'contact': 'Contact'
-		'brands': 'Brands'
-		'test': 'Test'
-		'test2': 'Test2'
+		'about': 'About'
 	}
 
 	constructor: () ->
 
-		console.log '%c# --------------------o Running Desktop', 'background: #42e34d; color: #F0F0F0;'
+		console.log '%c# --------------------o Running Desktop', 'background: #42e34d; color: #0F0F0F;'
 
 		W.init()
 
@@ -29,10 +22,9 @@ class App
 	_initContent: () =>
 
 		W.time = {
+			now: +new Date()
 			old: +new Date()
 		}
-
-		
 
 		@transitions = new Transitions()
 
@@ -55,9 +47,10 @@ class App
 
 	_destroySection: () =>
 
+		if @section
+			@section.destroy()
 
-
-		
+		@section = undefined
 
 
 	_initEvents: () =>

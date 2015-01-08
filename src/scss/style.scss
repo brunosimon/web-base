@@ -9,7 +9,6 @@
 
 // shared styles
 @import "shared/variables";
-@import "shared/ui";
 
 // global
 @import "desktop/global";
@@ -20,6 +19,4 @@
 
 // shared styles
 @import "desktop/parts/home";
-
-
-@import "desktop/responsive";
+@import "desktop/parts/about";
