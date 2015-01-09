@@ -112,75 +112,6 @@ Carousel = (function() {
 
 })();
 
-Loader = (function() {
-  function Loader(options) {
-    this._onLoad = __bind(this._onLoad, this);
-    var pics;
-    this.container = options.container, this.elm = options.elm, this.custom = options.custom, this.each = options.each, this.complete = options.complete;
-    if (this.elm) {
-      pics = this.container.find(this.elm);
-    } else {
-      pics = this.container.find('.img');
-    }
-    this.imgLength = pics.length;
-    this.imgInc = 0;
-    this.steps = 0;
-    this.empty = false;
-    if (!pics.length) {
-      this.empty = true;
-      if (this.complete) {
-        this.complete();
-      }
-    }
-    pics.each((function(_this) {
-      return function(key, item) {
-        var $this, attrs, img, klass, src;
-        $this = $(item);
-        klass = $this.attr('class').replace('img ', '');
-        src = $this.attr('data-src');
-        img = new Image();
-        attrs = '';
-        $.each(item.attributes, function(key, att) {
-          if (att.name === 'class') {
-            att.value = att.value.replace('img', '');
-          }
-          if (att.name !== 'data-src') {
-            return attrs += att.name + '="' + att.value + '" ';
-          }
-        });
-        img.src = src;
-        if (img.complete) {
-          return _this._onLoad($this, img, attrs);
-        } else {
-          return img.onload = _this._onLoad($this, img, attrs);
-        }
-      };
-    })(this));
-  }
-
-  Loader.prototype._onLoad = function($this, img, attrs) {
-    var _ref;
-    this.imgInc++;
-    this.steps = this.imgInc / this.imgLength * 100;
-    if (this.each) {
-      this.each($this, '<img src="' + img.src + '" ' + attrs + '/>', key);
-    }
-    if ((_ref = this.custom) === false || _ref === (void 0)) {
-      $this.replaceWith('<img src="' + img.src + '" ' + attrs + '/>');
-    }
-    $(this).trigger(Event.STEPS);
-    if (this.imgInc === this.imgLength) {
-      if (this.complete) {
-        this.complete();
-      }
-      return $(this).trigger(Event.LOADED);
-    }
-  };
-
-  return Loader;
-
-})();
-
 Router = (function() {
   Router.CALLSTART = 'callstart';
 
@@ -370,6 +301,55 @@ Router = (function() {
   };
 
   return Router;
+
+})();
+
+Loader = (function() {
+  function Loader(options) {
+    this._onLoad = __bind(this._onLoad, this);
+    var pics;
+    this.container = options.container, this.each = options.each, this.complete = options.complete;
+    pics = this.container.find('img').filter(function() {
+      return this.getAttribute('src') === '';
+    });
+    this.imgLength = pics.length;
+    this.imgInc = 0;
+    this.steps = 0;
+    this.empty = false;
+    if (!pics.length) {
+      this.empty = true;
+      if (this.complete) {
+        this.complete();
+      }
+    }
+    pics.each((function(_this) {
+      return function(key, item) {
+        var src;
+        src = item.getAttribute('data-src');
+        if (img.complete) {
+          _this._onLoad(item);
+        } else {
+          item.onload = _this._onLoad(item);
+        }
+        return item.src = src;
+      };
+    })(this));
+  }
+
+  Loader.prototype._onLoad = function(item) {
+    this.imgInc++;
+    this.steps = this.imgInc / this.imgLength * 100;
+    if (this.each) {
+      this.each(item);
+    }
+    if (this.imgInc === this.imgLength) {
+      if (this.complete) {
+        return this.complete();
+      }
+    }
+  };
+
+  return Loader;
 
 })();
 
@@ -1420,21 +1400,23 @@ Event = (function() {
 })();
 
 Page = (function() {
-  function Page() {
+  function Page(options) {
     this.destroy = __bind(this.destroy, this);
     this.update = __bind(this.update, this);
     this.resize = __bind(this.resize, this);
     this._initEvents = __bind(this._initEvents, this);
     this._initContent = __bind(this._initContent, this);
-    var name;
-    name = this.constructor.name;
-    console.log('%c# --------------------o Initialize Class ' + name, 'background: #e1e342; color: #0F0F0F;');
+    this.pageId = options.pageId;
+    console.log('%c# --------------------o Initialize Class ' + this.pageId, 'background: #e1e342; color: #0F0F0F;');
     this._initContent();
     this._initEvents();
   }
 
   Page.prototype._initContent = function() {
-    return this.container = $('#part-' + name.charAt(0).toLowerCase() + name.slice(1));
+    this.container = $('#part-' + this.pageId.charAt(0).toLowerCase() + this.pageId.slice(1));
+    return new Loader({
+      container: this.container
+    });
   };
 
   Page.prototype._initEvents = function() {};
@@ -1576,7 +1558,7 @@ Utils = (function() {
 })();
 
 App = (function() {
-  App.sections = {
+  App.pages = {
     'about': 'About'
   };
 
@@ -1588,7 +1570,7 @@ App = (function() {
     this._onResize = __bind(this._onResize, this);
     this._initEvents = __bind(this._initEvents, this);
     this._destroySection = __bind(this._destroySection, this);
-    this._initSection = __bind(this._initSection, this);
+    this._initPage = __bind(this._initPage, this);
     this._initContent = __bind(this._initContent, this);
     console.log('%c# --------------------o Running Desktop', 'background: #42e34d; color: #0F0F0F;');
     W.init();
@@ -1603,14 +1585,16 @@ App = (function() {
       old: +new Date()
     };
     this.transitions = new Transitions();
-    return this._initSection();
+    return this._initPage();
   };
 
-  App.prototype._initSection = function() {
+  App.prototype._initPage = function() {
     this._destroySection();
-    this.sectionId = Router.singleton.pages.current.replace('part-', '');
-    if (this.sectionId && App.sections[this.sectionId]) {
-      this.section = new window[App.sections[this.sectionId]];
+    this.pageId = Router.singleton.pages.current.replace('part-', '');
+    if (this.pageId) {
+      this.section = new window[App.pages[this.pageId] || 'Page']({
+        pageId: this.pageId
+      });
     }
     return this._onResize();
   };
@@ -1640,7 +1624,7 @@ App = (function() {
   App.prototype._onTransitionsStart = function() {};
 
   App.prototype._onTransitionsMiddle = function() {
-    return this._initSection();
+    return this._initPage();
   };
 
   App.prototype._onTransitionsEnd = function() {};

@@ -2,12 +2,11 @@ class Loader
 
 	constructor: (options) ->
 
-		{@container, @elm, @custom, @each, @complete} = options
-
-		if @elm
-			pics = @container.find(@elm)
-		else
-			pics = @container.find('.img')
+		{@container, @each, @complete} = options
+	
+		pics = @container.find('img').filter( () ->
+			return this.getAttribute('src') == ''
+		)
 			
 		@imgLength = pics.length
 		@imgInc = 0
@@ -21,44 +20,27 @@ class Loader
 
 		pics.each (key, item) =>
 
-			$this = $(item)
-			klass = $this.attr('class').replace('img ', '')
-			src = $this.attr('data-src')
-			img = new Image()
+			src = item.getAttribute('data-src')
 
-			attrs = ''
-
-			$.each item.attributes, (key, att) =>
-				if att.name == 'class'
-					att.value = att.value.replace('img','')
-
-				if att.name != 'data-src'
-					attrs += att.name + '="' + att.value + '" '
-
-			img.src = src
 			if img.complete
-				@_onLoad($this, img, attrs)
+				@_onLoad(item)
 			else
-				img.onload = @_onLoad($this, img, attrs)
+				item.onload = @_onLoad(item)
+
+			item.src = src
 
 
 
 
-	_onLoad: ($this, img, attrs) =>
+	_onLoad: (item) =>
 
 		@imgInc++
 		@steps = @imgInc / @imgLength * 100
 		
 		if @each
-			@each($this, '<img src="' + img.src + '" ' + attrs + '/>', key)
-		if @custom in [false, undefined]
-			$this.replaceWith('<img src="' + img.src + '" ' + attrs + '/>')
-
-		$(@).trigger(Event.STEPS)
+			@each(item)
 
 		if @imgInc == @imgLength
 
 			if @complete
 				@complete()
-
-			$(@).trigger(Event.LOADED)

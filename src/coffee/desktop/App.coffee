@@ -1,6 +1,6 @@
 class App
 
-	@sections: {
+	@pages: {
 		'about': 'About'
 	}
 
@@ -28,19 +28,21 @@ class App
 
 		@transitions = new Transitions()
 
-		@_initSection()
+		@_initPage()
 
 
 
 
-	_initSection: () =>
+	_initPage: () =>
 
 		@_destroySection()
 
-		@sectionId = Router.singleton.pages.current.replace('part-','')
+		@pageId = Router.singleton.pages.current.replace('part-','')
 
-		if @sectionId && App.sections[@sectionId]
-			@section = new window[App.sections[@sectionId]]
+		if @pageId
+			@section = new window[App.pages[@pageId] || 'Page']({
+				pageId: @pageId
+			})
 
 		@_onResize()
 
@@ -85,7 +87,7 @@ class App
 
 	_onTransitionsMiddle: () =>
 
-		@_initSection()
+		@_initPage()
 
 
 	_onTransitionsEnd: () =>

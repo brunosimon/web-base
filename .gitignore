@@ -10,3 +10,7 @@ site/vendor
 site/composer.lock
 site/composer.phar
 
+site/dev/assets/css
+site/dev/assets/js
+site/dev/assets/img/sprite
+

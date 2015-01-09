@@ -1,10 +1,10 @@
 class Page
 
-	constructor: () ->
+	constructor: (options) ->
 
-		name = @.constructor.name
+		{@pageId} = options
 
-		console.log '%c# --------------------o Initialize Class ' + name, 'background: #e1e342; color: #0F0F0F;'
+		console.log '%c# --------------------o Initialize Class ' + @pageId, 'background: #e1e342; color: #0F0F0F;'
 
 		@_initContent()
 		@_initEvents()
@@ -13,8 +13,12 @@ class Page
 	# -----------------------------------------------------------------------------o private
 
 	_initContent: () =>
-		
-		@container = $('#part-' + name.charAt(0).toLowerCase() + name.slice(1) )
+			
+		@container = $('#part-' + @pageId.charAt(0).toLowerCase() + @pageId.slice(1) )
+
+		new Loader({
+			container: @container
+		})
 
 		
 

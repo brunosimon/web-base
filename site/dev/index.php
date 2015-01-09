@@ -44,15 +44,7 @@ $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 		$app->render( $data['viewFolder'] . '/' . $data['route']->view . '.html.twig', $data);
 	}
 
-	//
-
-	//$app->render($data);
 });
-
-/*$app->error('', function(){
-	// Pour setter le statut de la 404 à 200 si Ajax
-	$app->response->setStatus(400);
-});*/
 
 
 $app->run();

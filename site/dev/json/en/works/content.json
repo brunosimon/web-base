@@ -2,12 +2,12 @@
 	"title": "Works page",
 	"works": [
 		{
-			"title": "Blank",
-			"path": "/works/blank"
+			"title": "Project 1",
+			"path": "/works/project-1"
 		},
 		{
-			"title": "Malakoff",
-			"path": "/works/malakoff"
+			"title": "Project 2",
+			"path": "/works/project-2"
 		}
 	]
 }
