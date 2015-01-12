@@ -1,6 +1,7 @@
-Options +FollowSymLinks -MultiViews
-# Turn mod_rewrite on
-RewriteEngine On
-RewriteBase /
+RewriteEngine ON
+RewriteCond %{HTTP_HOST} ^uploads\.base$ [NC]
+RewriteRule ^.*\.(gif|jpg|png)$ http://manage.base/uploads/$0 [L,R]
 
-RewriteRule ^/(.+?)/?$ http://manage.base/$1 [P,L,NC]
+
+
+
