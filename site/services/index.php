@@ -4,7 +4,7 @@
 
 require '../vendor/autoload.php';
 require '../config.php';
-require '../cockpit/bootstrap.php';
+require '../manage/bootstrap.php';
 require 'utils/Utils.php';
 
 // ------------------------------------------------o Create App

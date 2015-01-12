@@ -18,13 +18,6 @@ fs 				= require 'fs'
 
 require('./gulpfile.js')
 
-###
-	
-	TODO:
-		- use js map: example — var foo = function (i) { console.log(i) }; [0, 1, 2, 3].map(foo);
-
-###
-
 
 # ---------------------------------------------------------------------o variables
 
@@ -182,7 +175,7 @@ gulp.task 'favicons', ->
 
 		for j in [0...config.favicons.type[i].sizes.length]
 			size = config.favicons.type[i].sizes[j]
-			filename = dest + name + '-' + size + 'x' + size
+			filename = name + '-' + size + 'x' + size
 
 
 			gulp
@@ -204,7 +197,7 @@ gulp.task 'favicons', ->
 						basename: 'favicon'
 						extname: '.ico'
 					}))
-					.pipe(gulp.dest(dest))
+					.pipe(gulp.dest(config.dest))
 	
 
 # ---------------------------------------------------------------------o build
