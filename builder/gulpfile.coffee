@@ -14,6 +14,9 @@ spritesmith		= require 'gulp.spritesmith'
 imageResize 	= require 'gulp-image-resize'
 rename	 		= require 'gulp-rename'
 autoprefixer 	= require 'gulp-autoprefixer'
+imagemin 		= require 'gulp-imagemin'
+pngquant 		= require 'imagemin-pngquant'
+jpegtran 		= require 'imagemin-jpegtran'
 fs 				= require 'fs'
 
 require('./gulpfile.js')
@@ -200,10 +203,25 @@ gulp.task 'favicons', ->
 					.pipe(gulp.dest(config.dest))
 	
 
-# ---------------------------------------------------------------------o build
+# ---------------------------------------------------------------------o optimize pictures
 
-gulp.task 'build', () =>
-	gulp.run('grunt-build')
+gulp.task 'imageoptim', ->
+
+	for i in [0...config.image.length]
+
+		src = config.src + config.image[i].src
+		dest = config.image[i].dest
+
+		console.log src
+
+		gulp
+			.src( src )
+			.pipe(imagemin({
+				progressive: true
+				use: [pngquant(), jpegtran()]
+			}))
+	    	.pipe(plumber())
+			.pipe(gulp.dest( dest ))
 
 
 

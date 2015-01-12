@@ -67,5 +67,12 @@
 				"sizes": [144]
 			}
 		]
-	}
+	},
+
+	"image": [
+		{
+			"src": "medias/**/*",
+			"dest": "../site/dev/assets/medias"
+		}
+	]
 }

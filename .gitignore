@@ -15,3 +15,8 @@ site/dev/assets/js
 site/dev/assets/img/sprite
 site/dev/assets/favicons
 
+site/dev/assets/medias/**/*.png
+site/dev/assets/medias/**/*.jpg
+site/dev/assets/medias/**/*.jpeg
+site/dev/assets/medias/**/*.svg
+site/dev/assets/medias/**/*.gif
