@@ -17,6 +17,7 @@ autoprefixer 	= require 'gulp-autoprefixer'
 imagemin 		= require 'gulp-imagemin'
 pngquant 		= require 'imagemin-pngquant'
 jpegtran 		= require 'imagemin-jpegtran'
+webp	 		= require 'imagemin-webp'
 fs 				= require 'fs'
 
 require('./gulpfile.js')
@@ -205,14 +206,35 @@ gulp.task 'favicons', ->
 
 # ---------------------------------------------------------------------o optimize pictures
 
-gulp.task 'imageoptim', ->
+gulp.task 'imageoptim', ['imageoptim_compress, imageoptim_converwebp'], ->
+
+	return
+
+gulp.task 'imageoptim_convertwebp', ->
+
+	for i in [0...config.image.length]
+
+		dest = config.image[i].dest
+
+		gulp
+			.src( dest + '/**/*.{jpg,png}' )
+			.pipe(webp({
+				#quality: 100
+				#lossless: false
+				#alphaQuality: 100
+				#sharpness: 7
+				#method: 6
+			})())
+	    	.pipe(plumber())
+			.pipe(gulp.dest( dest ))
+
+
+gulp.task 'imageoptim_compress', ->
 
 	for i in [0...config.image.length]
 
 		src = config.src + config.image[i].src
 		dest = config.image[i].dest
-
-		console.log src
 
 		gulp
 			.src( src )
@@ -222,6 +244,8 @@ gulp.task 'imageoptim', ->
 			}))
 	    	.pipe(plumber())
 			.pipe(gulp.dest( dest ))
+
+
 
 
 

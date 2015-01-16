@@ -3,10 +3,13 @@
 require '../vendor/autoload.php';
 require '../config.php';
 require 'App/Router.php';
+require 'App/utils/TwigExtension/TwigExtension.php';
+
+use \Slim\Slim;
 
 // ------------------------------------------------o Create App
 
-$app = new \Slim\Slim();
+$app = new Slim();
 
 $app->config(array(
 	'view' => new \Slim\Views\Twig(),
@@ -16,13 +19,17 @@ $app->config(array(
     'mode' => 'production'
 ));
 
+$app->view->parserExtensions = array(
+    new TwigExtension()
+);
+
 $router = new Router($app);
 
 //$app->add(new \CheckMiddleware());
 
 // ------------------------------------------------o Register Twig
 
-$app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
+//$app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
 
 // ------------------------------------------------o Conf
@@ -37,7 +44,8 @@ $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 		if ($data['ajax'] == true){
 			$statusCode = 200;
 		}
-		$app->render($data['viewFolder'] . '/404.html.twig', array(), $statusCode);
+		$data['route'] = array('view' => '404');
+		$app->render($data['viewFolder'] . '/404.html.twig', $data, $statusCode);
 	}
 	else {
 

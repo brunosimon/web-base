@@ -39,12 +39,15 @@ class Router {
         $content = $this->getContent($route);
 
         $this->data = array(
-            'lang' => $this->lang,
             'content' => $content,
             'global' => $global,
             'route' => $route,
             'viewFolder' => $viewFolder
         );
+
+        if (isset($this->lang)){
+            $this->data['lang'] = $this->lang;
+        }
 
         $this->setGlobalVariables();
 
@@ -125,7 +128,7 @@ class Router {
 
         // ---o If it's home, return index template
         if (count($this->params) == 0){
-            return (object) array('view' => 'index');
+            return (object) array('view' => 'home');
         }
 
         foreach ($this->params as $key=>$item){
@@ -150,35 +153,40 @@ class Router {
         $path = '';
         $content = (object) array();
 
-        if (isset($route->type) && $route->type == 'old'){
-            $path =  "json" . $this->rootPath . "old.json";
-        } else {
-            $routeParams = $this->params;
-            $longPath = "json" . $this->rootPath . implode('/', $routeParams) ."/content.json";
-            $filename = array_pop($routeParams);
-            $shortPath = "json" . $this->rootPath . implode('/', $routeParams) . "/" . $filename . ".json";
+        if (!isset($route->view)){
+            $path = "json" . $this->rootPath . "404.json";
+        }
+        else {
+            if (isset($route->type) && $route->type == 'old'){
+                $path =  "json" . $this->rootPath . "old.json";
+            } else {
+                $routeParams = $this->params;
+                $longPath = "json" . $this->rootPath . implode('/', $routeParams) ."/content.json";
+                $filename = array_pop($routeParams);
+                $shortPath = "json" . $this->rootPath . implode('/', $routeParams) . "/" . $filename . ".json";
 
-            if (isset($route->service) && $route->service != ''){
-                if ($route->service == '::'){
-                    $path = SERVICES . '/';
-                    if (MULTILINGUAL){
-                        $path .= $this->lang . '/';
+                if (isset($route->service) && $route->service != ''){
+                    if ($route->service == '::'){
+                        $path = SERVICES . '/';
+                        if (MULTILINGUAL){
+                            $path .= $this->lang . '/';
+                        }
+                        $path .= implode('/', $this->params);
+                        $content->data = json_decode($this->getDataFromURL($path)); 
                     }
-                    $path .= implode('/', $this->params);
-                    $content->data = json_decode($this->getDataFromURL($path)); 
                 }
-            }
 
-            if (file_exists($longPath)) {
-                $path = $longPath;
-            }
-            else if (file_exists($shortPath)) {
-                $path = $shortPath;
+                if (file_exists($longPath)) {
+                    $path = $longPath;
+                }
+                else if (file_exists($shortPath)) {
+                    $path = $shortPath;
+                }
             }
         }
 
         if ($path != '' && file_exists($path)){
-            $content = (object) array_merge( (array) json_decode(file_get_contents($path)), (array) $content );            
+            $content = (object) array_merge( (array) json_decode( file_get_contents($path)), (array) $content );           
         }
 
         return $content;

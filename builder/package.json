@@ -26,9 +26,11 @@
     "gulp-svgmin": "~0.4.7",
     "gulp-svgstore": "~1.0.1",
     "gulp-uglify": "~0.3.2",
+    "gulp-webp": "^2.1.1",
     "gulp.spritesmith": "^1.1.1",
     "imagemin-jpegtran": "^4.0.0",
     "imagemin-pngquant": "^4.0.0",
+    "imagemin-webp": "^3.0.0",
     "path": "^0.4.9"
   }
 }

@@ -28,9 +28,16 @@
 					$post[$prop] = replaceSrcAttributes($post[$prop], UPLOADS . '/');
 				}
 
+
 			}
 
-			$post['path'] = $lang . '/' . strtolower($collection) . '/' . stringToNiceUrl($post['title']);
+			$post['path'] = $lang . '/' . strtolower($collection) . '/' . stringToNiceUrl($post['title']);		
+
+			setlocale(LC_TIME, $lang . "_" . strtoupper($lang));
+			$date = explode(' ', strftime("%d %b %Y", $post['created']));
+
+			$post['date'] = (object) array('day' => $date[0], 'month' => $date[1], 'year' => $date[2], 'formatted' => strftime("%d %b %Y", $post['created'] ));
+
 
 			array_push($posts, $post);
 		}
