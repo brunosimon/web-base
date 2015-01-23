@@ -1,6 +1,6 @@
 RewriteEngine ON
-RewriteCond %{HTTP_HOST} ^uploads\.base$ [NC]
-RewriteRule ^.*\.(gif|jpg|png)$ http://manage.base/uploads/$0 [L,R]
+RewriteCond %{HTTP_HOST} ^uploads.base$ [NC]
+RewriteRule ^.*\.(gif|jpg|png)$ http://manage.base/uploads/$0 [P]
 
 
 

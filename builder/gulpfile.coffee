@@ -206,7 +206,7 @@ gulp.task 'favicons', ->
 
 # ---------------------------------------------------------------------o optimize pictures
 
-gulp.task 'imageoptim', ['imageoptim_compress, imageoptim_converwebp'], ->
+gulp.task 'imageoptim', ['imageoptim_compress', 'imageoptim_convertwebp'], ->
 
 	return
 
@@ -229,7 +229,7 @@ gulp.task 'imageoptim_convertwebp', ->
 			.pipe(gulp.dest( dest ))
 
 
-gulp.task 'imageoptim_compress', ->
+gulp.task 'imageoptim', ->
 
 	for i in [0...config.image.length]
 
@@ -242,6 +242,20 @@ gulp.task 'imageoptim_compress', ->
 				progressive: true
 				use: [pngquant(), jpegtran()]
 			}))
+	    	.pipe(plumber())
+			.pipe(gulp.dest( dest ))
+	    	.pipe(rename( (path) ->
+	    		console.log(path)
+	    		path.basename += path.extname
+	    		return
+	    	))
+			.pipe(webp({
+				#quality: 100
+				#lossless: false
+				#alphaQuality: 100
+				#sharpness: 7
+				#method: 6
+			})())
 	    	.pipe(plumber())
 			.pipe(gulp.dest( dest ))
 
