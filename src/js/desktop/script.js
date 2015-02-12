@@ -112,6 +112,55 @@ Carousel = (function() {
 
 })();
 
+Loader = (function() {
+  function Loader(options) {
+    this._onLoad = __bind(this._onLoad, this);
+    var pics;
+    this.container = options.container, this.each = options.each, this.complete = options.complete;
+    pics = this.container.find('img').filter(function() {
+      return this.getAttribute('src') === '';
+    });
+    this.imgLength = pics.length;
+    this.imgInc = 0;
+    this.steps = 0;
+    this.empty = false;
+    if (!pics.length) {
+      this.empty = true;
+      if (this.complete) {
+        this.complete();
+      }
+    }
+    pics.each((function(_this) {
+      return function(key, item) {
+        var src;
+        src = item.getAttribute('data-src');
+        if (img.complete) {
+          _this._onLoad(item);
+        } else {
+          item.onload = _this._onLoad(item);
+        }
+        return item.src = src;
+      };
+    })(this));
+  }
+
+  Loader.prototype._onLoad = function(item) {
+    this.imgInc++;
+    this.steps = this.imgInc / this.imgLength * 100;
+    if (this.each) {
+      this.each(item);
+    }
+    if (this.imgInc === this.imgLength) {
+      if (this.complete) {
+        return this.complete();
+      }
+    }
+  };
+
+  return Loader;
+
+})();
+
 Router = (function() {
   Router.CALLSTART = 'callstart';
 
@@ -223,7 +272,8 @@ Router = (function() {
     $(this).trigger(Router.CALLSTART);
     if (this.cache[this.href]) {
       this.fromCache = true;
-      this.content = this.cache[this.href].clone();
+      this.content = this.cache[this.href].content.clone();
+      this.title = this.cache[this.href].title;
       return this.requestSucceeded();
     } else {
       this.fromCache = false;
@@ -253,7 +303,6 @@ Router = (function() {
       })(this),
       error: (function(_this) {
         return function(response) {
-          console.log(response);
           return $(_this).trigger(Router.CALLERROR);
         };
       })(this)
@@ -276,7 +325,10 @@ Router = (function() {
   };
 
   Router.prototype.caching = function() {
-    return this.cache[this.href] = this.content.clone();
+    return this.cache[this.href] = {
+      'content': this.content.clone(),
+      'title': this.title
+    };
   };
 
   Router.prototype.changeUrl = function(href) {
@@ -301,55 +353,6 @@ Router = (function() {
   };
 
   return Router;
-
-})();
-
-Loader = (function() {
-  function Loader(options) {
-    this._onLoad = __bind(this._onLoad, this);
-    var pics;
-    this.container = options.container, this.each = options.each, this.complete = options.complete;
-    pics = this.container.find('img').filter(function() {
-      return this.getAttribute('src') === '';
-    });
-    this.imgLength = pics.length;
-    this.imgInc = 0;
-    this.steps = 0;
-    this.empty = false;
-    if (!pics.length) {
-      this.empty = true;
-      if (this.complete) {
-        this.complete();
-      }
-    }
-    pics.each((function(_this) {
-      return function(key, item) {
-        var src;
-        src = item.getAttribute('data-src');
-        if (img.complete) {
-          _this._onLoad(item);
-        } else {
-          item.onload = _this._onLoad(item);
-        }
-        return item.src = src;
-      };
-    })(this));
-  }
-
-  Loader.prototype._onLoad = function(item) {
-    this.imgInc++;
-    this.steps = this.imgInc / this.imgLength * 100;
-    if (this.each) {
-      this.each(item);
-    }
-    if (this.imgInc === this.imgLength) {
-      if (this.complete) {
-        return this.complete();
-      }
-    }
-  };
-
-  return Loader;
 
 })();
 
@@ -1557,6 +1560,17 @@ Utils = (function() {
 
 })();
 
+About = (function(_super) {
+  __extends(About, _super);
+
+  function About() {
+    About.__super__.constructor.apply(this, arguments);
+  }
+
+  return About;
+
+})(Page);
+
 App = (function() {
   App.pages = {
     'about': 'About'
@@ -1650,14 +1664,3 @@ $(function() {
     return window.requestAnimationFrame(tick);
   })();
 });
-
-About = (function(_super) {
-  __extends(About, _super);
-
-  function About() {
-    About.__super__.constructor.apply(this, arguments);
-  }
-
-  return About;
-
-})(Page);

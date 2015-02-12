@@ -19,7 +19,7 @@ class Router {
             $this->lang = $this->getLang();
 
             if ($urlLang == null || $this->lang != $urlLang){
-                $this->app->redirect('/' . DEFAULT_LANGUAGE);
+                $this->app->redirect($this->rootPath);
             }
         }
 
@@ -56,18 +56,14 @@ class Router {
 
     public function getLang()
     {      
-        if (count($this->params) == 0){
+        $lang = (count($this->params) == 0) ? $this->getUserLang() : $this->params[0];
+
+        if (!file_exists('json/' . $lang)){
+            echo 'geagae';
             $lang = DEFAULT_LANGUAGE;
         }
-        else {
-            $lang = (count($this->params) == 0) ? $this->getUserLang() : $this->params[0];
 
-            if (!file_exists('json/' . $lang)){
-                $lang = DEFAULT_LANGUAGE;
-            }
-
-            array_shift($this->params);
-        }
+        array_shift($this->params);
 
         $this->rootPath .= $lang . '/';
 

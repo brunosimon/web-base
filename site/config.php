@@ -20,10 +20,9 @@ define('SERVICES', 'http://services.' . DOMAIN);
 define('MEDIAS', 'http://medias.' . DOMAIN);
 define('UPLOADS', 'http://uploads.' . DOMAIN);
 
-define('ROOT_WEB', '/');
-
-define('CSS', ROOT_WEB . 'css/');
-define('JS', ROOT_WEB . 'js/');
-define('IMG', ROOT_WEB . 'css/');
-define('MEDIAS', ROOT_WEB . 'medias/');
+define('ASSETS', ROOT_WEB . 'assets/');
+define('CSS', ROOT_WEB . ASSETS . 'css/');
+define('JS', ROOT_WEB . ASSETS . 'js/');
+define('IMG', ROOT_WEB . ASSETS . 'css/');
+define('MEDIAS', ROOT_WEB . ASSETS . 'medias/');
 define('FAVICONS', ROOT_WEB . 'favicons/');

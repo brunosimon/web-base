@@ -1,3 +1,19 @@
+
+# ---------------------------------------------------------------------o modules
+
+gulp 			= require 'gulp'
+plumber			= require 'gulp-plumber'
+rename	 		= require 'gulp-rename'
+imageResize 	= require 'gulp-image-resize'
+
+
+# ---------------------------------------------------------------------o variables
+
+config = require('../config.json')
+
+
+# ---------------------------------------------------------------------o task
+
 gulp.task 'favicons', ->
 
 	src = config.favicons.src
@@ -9,11 +25,11 @@ gulp.task 'favicons', ->
 
 		for j in [0...config.favicons.type[i].sizes.length]
 			size = config.favicons.type[i].sizes[j]
-			filename = config.favicons.dest + name + '-' + size + 'x' + size
+			filename = name + '-' + size + 'x' + size
 
 
 			gulp
-				.src(config.src + config.favicons.src + name + ext)
+				.src(config.src + src + name + ext)
 				.pipe(imageResize({
 					width: size
 					height: size
@@ -21,12 +37,12 @@ gulp.task 'favicons', ->
 				.pipe(rename({
 					basename: filename
 				}))
-				.pipe(gulp.dest(config.dest + config.favicons.dest))
+				.pipe(gulp.dest(dest))
 
 			if name == 'favicon' && j == 0
 
 				gulp
-					.src(config.dest + filename + '.png')
+					.src(dest + filename + '.png')
 					.pipe(rename({
 						basename: 'favicon'
 						extname: '.ico'

@@ -1,4 +1,23 @@
-gulp.task 'sass:dev', ->
+
+# ---------------------------------------------------------------------o modules
+
+gulp 			= require 'gulp'
+plumber			= require 'gulp-plumber'
+sass	 		= require 'gulp-sass'
+autoprefixer 	= require 'gulp-autoprefixer'
+minifyCss		= require 'gulp-minify-css'
+
+
+# ---------------------------------------------------------------------o variables
+
+config = require('../config.json')
+
+
+# ---------------------------------------------------------------------o task
+
+	# ---------------------------------------------------o dev task
+
+gulp.task 'styles:dev', ->
 
 	for i in [0...config.sass.length]
 
@@ -11,11 +30,16 @@ gulp.task 'sass:dev', ->
 		gulp
 			.src( src )
 	    	.pipe(plumber())
-			.pipe(sass({  })) #'sourcemap=none': true
+			.pipe(sass({ 'soucemap=none' })) #'sourcemap=none': true
+			.pipe(autoprefixer({
+				 browsers: ['last 2 versions']
+			}))
 			.pipe(gulp.dest( dest ))
 
 
-gulp.task 'sass:dist', ->
+	# ---------------------------------------------------o prod task -> minify
+
+gulp.task 'styles:prod', ->
 
 	for i in [0...config.sass.length]
 
@@ -28,6 +52,9 @@ gulp.task 'sass:dist', ->
 		gulp
 			.src( src )
 	    	.pipe(plumber())
-			.pipe(sass({ style: 'expanded' }))
+			.pipe(sass({ 'soucemap=none' })) #'sourcemap=none': true
+			.pipe(autoprefixer({
+				 browsers: ['last 2 versions']
+			}))
 			.pipe(minifyCss())
 			.pipe(gulp.dest( dest ))

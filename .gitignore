@@ -10,10 +10,14 @@ site/vendor
 site/composer.lock
 site/composer.phar
 
+site/styleguide
+
 site/dev/assets/css
 site/dev/assets/js
 site/dev/assets/img/sprite
 site/dev/assets/favicons
+
+site/dev/cache
 
 site/dev/assets/medias/**/*.png
 site/dev/assets/medias/**/*.jpg

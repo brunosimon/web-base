@@ -1,4 +1,6 @@
-class Router
+$ 			= require 'jquery'
+
+module.exports = class Router
 
 	@CALLSTART = 'callstart'
 	@CALLEND = 'callend'
@@ -125,7 +127,8 @@ class Router
 
 		if @cache[@href]
 			@fromCache = true
-			@content = @cache[@href].clone()
+			@content = @cache[@href].content.clone()
+			@title = @cache[@href].title
 			@requestSucceeded()
 		else
 			@fromCache = false
@@ -157,7 +160,6 @@ class Router
 
 			error: (response) =>
 
-				console.log response
 				$(@).trigger(Router.CALLERROR)
 
 		}
@@ -183,7 +185,10 @@ class Router
 
 	caching: () ->
 
-		@cache[@href] = @content.clone()
+		@cache[@href] = {
+			'content': @content.clone()
+			'title': @title
+		}
 
 
 	changeUrl: (href) ->

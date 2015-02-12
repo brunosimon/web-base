@@ -3,6 +3,7 @@
 require '../vendor/autoload.php';
 require '../config.php';
 require 'App/Router.php';
+require 'App/utils/jsonCache/JSONCache.php';
 require 'App/utils/TwigExtension/TwigExtension.php';
 
 use \Slim\Slim;
@@ -20,8 +21,13 @@ $app->config(array(
 ));
 
 $app->view->parserExtensions = array(
-    new TwigExtension()
+    new TwigExtension(),
+    new Twig_Extension_StringLoader()
 );
+
+/*$app->view->parserOptions = array(
+    'cache' => dirname(__FILE__) . '/cache'
+);*/
 
 $router = new Router($app);
 
@@ -32,7 +38,20 @@ $router = new Router($app);
 //$app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
 
-// ------------------------------------------------o Conf
+
+// ------------------------------------------------o Cache instanciation + Clear cache —> Standing by for now
+
+/*$jsonCache = new JSONCache;
+
+$app->get('/', function() use ($app, $jsonCache){
+	$forceCache = $app->request()->params('forceCache');
+	if ($forceCache == true){
+		$jsonCache->clear();
+		echo "Cache cleared";
+	}
+});*/
+
+// ------------------------------------------------o App request
 
 $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 
@@ -48,6 +67,9 @@ $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 		$app->render($data['viewFolder'] . '/404.html.twig', $data, $statusCode);
 	}
 	else {
+		/*if ($data['ajax'] == false){
+			$jsonCache->generate($data['lang']);
+		}*/
 
 		$app->render( $data['viewFolder'] . '/' . $data['route']->view . '.html.twig', $data);
 	}

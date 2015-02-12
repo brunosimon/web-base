@@ -1,53 +1,50 @@
-gulp.task 'coffee', ->
 
-	for i in [0...config.coffee.length]
+# ---------------------------------------------------------------------o modules
 
-		src = []
-		for j in [0...config.coffee[i].src.length]
-			src.push(config.src + config.coffee[i].src[j])
+gulp 			= require 'gulp'
+plumber			= require 'gulp-plumber'
+browserify 		= require 'gulp-browserify'
+rename 			= require 'gulp-rename'
 
-		dest = config.src + config.coffee[i].dest
-		filename = config.coffee[i].filename
 
-		gulp
-			.src( src )
-    		.pipe(plumber())
-			.pipe(concat( filename ))
-			.pipe(coffee({ bare: true }))
-			.pipe(gulp.dest( dest ))
+# ---------------------------------------------------------------------o variables
 
-gulp.task 'js:dev', ->
+config = require('../config.json')
 
-	for i in [0...config.js.length]
 
-		src = []
-		for j in [0...config.js[i].src.length]
-			src.push(config.src + config.js[i].src[j])
+# ---------------------------------------------------------------------o task
 
-		dest = config.js[i].dest
-		filename = config.js[i].filename
+	# ---------------------------------------------------o dev task
+
+gulp.task 'scripts', ->
+	
+	for i in [0...config.scripts.length]
+
+		src = config.src + config.scripts[i].srcPath + '/' + config.scripts[i].srcFilename
+		dest = config.scripts[i].dest
+		filename = config.scripts[i].filename
 
 		gulp
-			.src( src )
+			.src( src, { read: false } )
     		.pipe(plumber())
-			.pipe(concat( filename ))
+			.pipe(browserify({
+				transform: ['coffeeify']
+				paths: ['./node_modules', config.src + config.scripts[i].srcPath, config.src + 'coffee/shared']
+				extensions: ['.coffee']
+			}))
+			.pipe(rename( filename ))
 			.pipe(gulp.dest( dest ))
 
 
-gulp.task 'js:dist', ->
+	# ---------------------------------------------------o dev task -> minify
 
-	for i in [0...config.js.length]
-
-		src = []
-		for j in [0...config.js[i].src.length]
-			src.push(config.src + config.js[i].src[j])
-
-		dest = config.js[i].dest
-		filename = config.js[i].filename
-
-		gulp
-			.src( src )
-    		.pipe(plumber())
-			.pipe(concat( filename ))
-			.pipe(uglify())
-			.pipe(gulp.dest( dest ))
+###
+gulp.src('../src/coffee/test/test.coffee', { read: false })
+		.pipe(browserify({
+			transform: ['coffeeify']
+			paths: ['./node_modules','../src/coffee/test']
+			extensions: ['.coffee']
+		}))
+		.pipe(rename('test.js'))
+		.pipe(gulp.dest('../site/dev/assets/js/'))
+###

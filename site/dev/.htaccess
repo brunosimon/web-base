@@ -1,9 +1,23 @@
 RewriteEngine On
 
-# redirect picture to 
+# webp support
 RewriteCond %{HTTP_ACCEPT} image/webp
 RewriteCond %{DOCUMENT_ROOT}/$1.$2.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.$2.webp [T=image/webp,E=accept:1]
 
+Header append Vary Accept env=REDIRECT_accept
+
+AddType image/webp .webp
+
+# slim
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+
+RewriteRule (.+)/$ $1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]

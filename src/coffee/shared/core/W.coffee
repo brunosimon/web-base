@@ -1,4 +1,6 @@
-class W
+$ = require 'jquery'
+
+module.exports = class W
 
 	@init: () ->
 

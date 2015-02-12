@@ -1,4 +1,6 @@
-class Loader
+$ = require 'jquery'
+
+module.exports = class Loader
 
 	constructor: (options) ->
 

@@ -1,4 +1,7 @@
-class Transitions
+$ 			= require 'jquery'
+Router 		= require 'libs/router/Router'
+
+module.exports = class Transitions
 
 	@START = 'callstart'
 	@END = 'callend'
