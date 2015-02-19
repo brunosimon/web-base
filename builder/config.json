@@ -6,10 +6,25 @@
 
 	"scripts": [
 		{
-			"srcPath": "coffee/desktop",
-			"srcFilename": "App.coffee",
-			"dest": "../site/dev/assets/js/",
-			"filename": "script.js"
+			"coffee": {
+				"src": [
+					"coffee/shared/data/**/*.coffee",
+					"coffee/shared/core/**/*.coffee",
+					"coffee/shared/utils/**/*.coffee",
+					"coffee/desktop/**/*.coffee"
+				],
+				"dest": "js/desktop",
+				"filename": "script.coffee"
+			},
+			"javascript": {
+				"src": [
+					"js/shared/libs/jquery/jquery-2.1.1.min.js",
+					"js/shared/libs/utils/**/*.js",
+					"js/desktop/script.js"
+				],
+				"dest": "../site/dev/assets/js",
+				"filename": "script.js"
+			}
 		}
 	],
 

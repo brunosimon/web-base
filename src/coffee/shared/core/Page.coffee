@@ -1,7 +1,4 @@
-$ 				= require 'jquery'
-Loader 			= require 'libs/loader/Loader'
-
-module.exports = class Page
+class Page
 
 	constructor: (options) ->
 

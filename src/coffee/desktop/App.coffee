@@ -1,13 +1,9 @@
-$				= require 'jquery'
-App 			= require 'core/App'
+class App extends AppCore
 
-$ ->
-	
-	app = new App()
+	@pages: {
+		'home': Home
+	}
 
-	console.log app
+	constructor: () ->
 
-	(tick = () ->
-		app.update()
-		window.requestAnimationFrame(tick)
-	)()
+		super

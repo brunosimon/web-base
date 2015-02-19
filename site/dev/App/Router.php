@@ -223,6 +223,7 @@ class Router {
         $this->data['description'] = $description;
         $this->data['domain'] = DOMAIN;
         $this->data['root_web'] = ROOT_WEB;
+        $this->data['share_image'] = ROOT_WEB . '/medias/facebook-share.jpg';
 
     }
 

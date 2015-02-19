@@ -36,6 +36,8 @@ gulp.task 'default', () =>
 				else
 					taskname = 'sprites'
 			when '.coffee'
+				taskname = 'coffee'
+			when '.js'
 				taskname = 'scripts'
 			when '.scss'
 				taskname = 'styles:dev'
@@ -44,3 +46,10 @@ gulp.task 'default', () =>
 			gulp.start( taskname )
 
 	)
+
+# ---------------------------------------------------------------------o minify task
+
+gulp.task 'dist', () =>
+
+	gulp.start('scripts:dist')
+	gulp.start('styles:dist')
