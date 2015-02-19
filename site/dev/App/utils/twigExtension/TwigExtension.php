@@ -15,6 +15,9 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             'file_exists' => new \Twig_Function_Function('file_exists'),
+            'getUrl' => new \Twig_Function_Function(function(){
+                return 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            })
         );
     }
  

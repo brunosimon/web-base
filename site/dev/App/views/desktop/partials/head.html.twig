@@ -1,6 +1,10 @@
     
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <![endif]-->
+    
+    <link rel="canonical" href="{{ getUrl() }}" />
 
     <title>{{ title }}</title>
     <meta name="description" content="{{ description }}">
@@ -12,25 +16,21 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <!-- SOCIAL DATAS -->
-    <!-- GOOGLE PLUS -->
-    <meta itemprop="name" content="{{ title }}">
-    <meta itemprop="description" content="{{ description }}">
 
     <!-- FACEBOOK -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ title }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:url" content="{{ getUrl() }}">
     <meta property="og:image" content="{{ root_web }}/medias/facebook-share.jpg">
     <meta property="og:site_name" content="{{ site_name }}">
     <meta property="og:description" content="{{ description }}">
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@Immersive_g">
-    <meta name="twitter:creator" content="@Immersive_g">
+    <meta name="twitter:site" content="@{{ global.twitter.username }}">
     <meta name="twitter:title" content="{{ title }}">
     <meta name="twitter:description" content="{{ description }}">
-    <meta name="twitter:image" content="/medias/facebook-share.jpg">
+    <meta name="twitter:image:src" content="/medias/facebook-share.jpg">
 
     <!-- FAVICONS -->
     <link rel="icon" type="image/png" href="/medias/favicons/favicon.ico">

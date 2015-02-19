@@ -4,5 +4,9 @@
 		"description": "description"
 	},
 
-	"gaId": "google analytics id"
+	"gaId": "google analytics id",
+
+	"twitter": {
+		"username": "gea"
+	}
 }

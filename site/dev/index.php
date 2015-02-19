@@ -15,9 +15,9 @@ $app = new Slim();
 $app->config(array(
 	'view' => new \Slim\Views\Twig(),
 	'log.level' => \Slim\Log::DEBUG,
-	'debug' => true,
+	'debug' => (ENV == true) ? true : false,
 	'templates.path' => 'App/views',
-    'mode' => 'production'
+    'mode' => (ENV == true) ? 'production' : 'development'
 ));
 
 $app->view->parserExtensions = array(
@@ -54,7 +54,7 @@ $app->get('/', function() use ($app, $jsonCache){
 // ------------------------------------------------o App request
 
 $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
-
+	
 	$data = $router->getData($params);
 	$data['ajax'] = $app->request->isAjax();
 

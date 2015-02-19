@@ -27,7 +27,7 @@ class Router {
 
         if ($viewFolder == 'old'){
             if (count($this->params) > 0){
-                $this->app->redirect('/' . $this->lang);
+                $this->app->redirect(   $this->lang);
             }
             $route = (object) array('view' => 'index', 'type' => 'old');
         }
