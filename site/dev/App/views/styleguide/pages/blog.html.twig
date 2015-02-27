@@ -1,0 +1,21 @@
+{% extends ajax ? "desktop/default/empty.html.twig" : "desktop/default/layout.html.twig" %}
+
+{% block content %}
+
+<div class="center">
+
+	<h1>{{ content.title }}</h1>
+	
+	<ul>
+	{% for article in content.data %}
+		<li>
+			<a href="{{ root_web ~ article.path }}">
+				{{ article.title }}
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+
+</div>
+
+{% endblock %}

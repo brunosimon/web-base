@@ -15,6 +15,20 @@ requireDir('./tasks', { recurse: true })
 
 config = require('./config.json')
 
+###
+console.log config.styles
+
+
+fabricator = {
+	styles: {
+		src: 
+		dest:
+
+	}
+}
+config.styles.push {}
+###
+
 
 # ---------------------------------------------------------------------o default task
 

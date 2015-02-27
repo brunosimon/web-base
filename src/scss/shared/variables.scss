@@ -11,21 +11,17 @@ $font-text: 'Open Sans', 'Times', serif;
 
 // -------------------------o Imports colors
 
+// --> Colors start
+
+// @part Primary Colors
 $white 				: #FFFFFF;
 $black 				: #000000;
 
 $grey-white			: #F7F7F7;
 
+
+// @part Template Colors
 $bg-color 			: $grey-white;
 
+// --> Colors end
 
-
-// -------------------------o Others
-
-.no-transition {
-	transition:all 0ms $linear 0ms !important;
-
-	* {
-		transition:all 0ms $linear 0ms !important;
-	}
-}

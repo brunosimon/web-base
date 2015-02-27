@@ -192,8 +192,11 @@ class Router {
     {
 
         $viewFolder = 'desktop';
+        $subdomain = array_shift((explode(".",$_SERVER['HTTP_HOST'])));
 
-
+        if ($subdomain == 'styleguide'){
+            $viewFolder = 'styleguide';
+        }        
         if(preg_match('/(?i)msie [1-8]/', $_SERVER['HTTP_USER_AGENT']) /*|| strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0; rv:11.0') !== false*/){
             $viewFolder = 'old';
         }

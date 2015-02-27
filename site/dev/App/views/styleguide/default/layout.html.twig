@@ -1,0 +1,20 @@
+{% extends "styleguide/partials/data.html.twig" %}
+{% block layout %}
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html><!--<![endif]-->
+<head>
+	{{ include('desktop/partials/head.html.twig') }}
+</head>
+<body>
+{% include 'desktop/partials/header.html.twig' %}
+
+{% include "styleguide/partials/data.html.twig" %}
+
+{% block content %}{% endblock %}
+
+
+{{ include('desktop/partials/foot.html.twig') }}
+</body>
+</html>
+{% endblock %}

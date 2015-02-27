@@ -21,6 +21,14 @@ a {
 	}
 }
 
+.no-transition {
+	transition:all 0ms $linear 0ms !important;
+
+	* {
+		transition:all 0ms $linear 0ms !important;
+	}
+}
+
 .center {
 	position:relative;
 	width:960px;

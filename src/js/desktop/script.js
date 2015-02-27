@@ -1,19 +1,19 @@
 var App, AppCore, Event, Home, Loader, Normalize, Page, Router, SocialSharing, Transitions, Utils, W,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 AppCore = (function() {
   function AppCore() {
-    this.update = __bind(this.update, this);
-    this._onTransitionsEnd = __bind(this._onTransitionsEnd, this);
-    this._onTransitionsMiddle = __bind(this._onTransitionsMiddle, this);
-    this._onTransitionsStart = __bind(this._onTransitionsStart, this);
-    this._onResize = __bind(this._onResize, this);
-    this._initEvents = __bind(this._initEvents, this);
-    this._destroySection = __bind(this._destroySection, this);
-    this._initPage = __bind(this._initPage, this);
-    this._initContent = __bind(this._initContent, this);
+    this.update = bind(this.update, this);
+    this._onTransitionsEnd = bind(this._onTransitionsEnd, this);
+    this._onTransitionsMiddle = bind(this._onTransitionsMiddle, this);
+    this._onTransitionsStart = bind(this._onTransitionsStart, this);
+    this._onResize = bind(this._onResize, this);
+    this._initEvents = bind(this._initEvents, this);
+    this._destroySection = bind(this._destroySection, this);
+    this._initPage = bind(this._initPage, this);
+    this._initContent = bind(this._initContent, this);
     console.log('%c# --------------------o Running Desktop', 'background: #42e34d; color: #0F0F0F;');
     W.init();
     this._initContent();
@@ -125,7 +125,7 @@ Event = (function() {
 
 Loader = (function() {
   function Loader(options) {
-    this._onLoad = __bind(this._onLoad, this);
+    this._onLoad = bind(this._onLoad, this);
     var pics;
     this.container = options.container, this.each = options.each, this.complete = options.complete;
     pics = this.container.find('img').filter(function() {
@@ -174,11 +174,11 @@ Loader = (function() {
 
 Page = (function() {
   function Page(options) {
-    this.destroy = __bind(this.destroy, this);
-    this.update = __bind(this.update, this);
-    this.resize = __bind(this.resize, this);
-    this._initEvents = __bind(this._initEvents, this);
-    this._initContent = __bind(this._initContent, this);
+    this.destroy = bind(this.destroy, this);
+    this.update = bind(this.update, this);
+    this.resize = bind(this.resize, this);
+    this._initEvents = bind(this._initEvents, this);
+    this._initContent = bind(this._initContent, this);
     this.pageId = options.pageId;
     console.log('%c# --------------------o Initialize Class ' + this.pageId, 'background: #e1e342; color: #0F0F0F;');
     this._initContent();
@@ -222,7 +222,7 @@ Router = (function() {
   Router.singleton;
 
   function Router() {
-    this.backCall = __bind(this.backCall, this);
+    this.backCall = bind(this.backCall, this);
     this.cache = {};
     this.container = $('.ajaxContainer');
     this.current = this.container.attr('id');
@@ -405,8 +405,8 @@ Router = (function() {
 
 SocialSharing = (function() {
   function SocialSharing() {
-    this._onLinkClick = __bind(this._onLinkClick, this);
-    this._initEvents = __bind(this._initEvents, this);
+    this._onLinkClick = bind(this._onLinkClick, this);
+    this._initEvents = bind(this._initEvents, this);
     this.links = $('.social-link');
     this._initEvents();
   }
@@ -439,14 +439,14 @@ Transitions = (function() {
   Transitions.MIDDLE = 'callmiddle';
 
   function Transitions() {
-    this._defaultIn = __bind(this._defaultIn, this);
-    this._defaultOut = __bind(this._defaultOut, this);
-    this._transitionIn = __bind(this._transitionIn, this);
-    this._transitionOut = __bind(this._transitionOut, this);
-    this._onRouterEnd = __bind(this._onRouterEnd, this);
-    this._onRouterStart = __bind(this._onRouterStart, this);
-    this._onRouterClick = __bind(this._onRouterClick, this);
-    this._initEvents = __bind(this._initEvents, this);
+    this._defaultIn = bind(this._defaultIn, this);
+    this._defaultOut = bind(this._defaultOut, this);
+    this._transitionIn = bind(this._transitionIn, this);
+    this._transitionOut = bind(this._transitionOut, this);
+    this._onRouterEnd = bind(this._onRouterEnd, this);
+    this._onRouterStart = bind(this._onRouterStart, this);
+    this._onRouterClick = bind(this._onRouterClick, this);
+    this._initEvents = bind(this._initEvents, this);
     this.router = new Router();
     this._transitionInDelay = 0;
     this.transitionsWhenCallFinished = true;
@@ -654,11 +654,11 @@ Utils = (function() {
 
 })();
 
-Home = (function(_super) {
-  __extends(Home, _super);
+Home = (function(superClass) {
+  extend(Home, superClass);
 
   function Home() {
-    this._initContent = __bind(this._initContent, this);
+    this._initContent = bind(this._initContent, this);
     Home.__super__.constructor.apply(this, arguments);
   }
 
@@ -670,8 +670,8 @@ Home = (function(_super) {
 
 })(Page);
 
-App = (function(_super) {
-  __extends(App, _super);
+App = (function(superClass) {
+  extend(App, superClass);
 
   App.pages = {
     'home': Home

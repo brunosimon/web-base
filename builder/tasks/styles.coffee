@@ -19,13 +19,13 @@ config = require('../config.json')
 
 gulp.task 'styles:dev', ->
 
-	for i in [0...config.sass.length]
+	for i in [0...config.styles.length]
 
 		src = []
-		for j in [0...config.sass[i].src.length]
-			src.push(config.src + config.sass[i].src[j])
+		for j in [0...config.styles[i].src.length]
+			src.push(config.src + config.styles[i].src[j])
 
-		dest = config.sass[i].dest
+		dest = config.styles[i].dest
 
 		gulp
 			.src( src )
@@ -41,13 +41,13 @@ gulp.task 'styles:dev', ->
 
 gulp.task 'styles:prod', ->
 
-	for i in [0...config.sass.length]
+	for i in [0...config.styles.length]
 
 		src = []
-		for j in [0...config.sass[i].src.length]
-			src.push(config.src + config.sass[i].src[j])
+		for j in [0...config.styles[i].src.length]
+			src.push(config.src + config.styles[i].src[j])
 
-		dest = config.sass[i].dest
+		dest = config.styles[i].dest
 
 		gulp
 			.src( src )

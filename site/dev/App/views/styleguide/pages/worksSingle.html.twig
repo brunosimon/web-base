@@ -1,0 +1,10 @@
+{% extends ajax ? "desktop/default/empty.html.twig" : "desktop/default/layout.html.twig" %}
+
+{% block content %}
+
+<div class="center">
+	<h1>{{ content.title }}</h1>
+	<div>{{ content.content | raw }}</div>
+</div>
+
+{% endblock %}

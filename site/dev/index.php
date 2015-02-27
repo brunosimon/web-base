@@ -64,14 +64,14 @@ $app->get('(/)(/:params+)', function($params = array()) use ($app, $router){
 			$statusCode = 200;
 		}
 		$data['route'] = array('view' => '404');
-		$app->render($data['viewFolder'] . '/404.html.twig', $data, $statusCode);
+		$app->render($data['viewFolder'] . 'pages/404.html.twig', $data, $statusCode);
 	}
 	else {
 		/*if ($data['ajax'] == false){
 			$jsonCache->generate($data['lang']);
 		}*/
 
-		$app->render( $data['viewFolder'] . '/' . $data['route']->view . '.html.twig', $data);
+		$app->render( $data['viewFolder'] . '/pages/' . $data['route']->view . '.html.twig', $data);
 	}
 
 });

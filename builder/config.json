@@ -25,13 +25,34 @@
 				"dest": "../site/dev/assets/js",
 				"filename": "script.js"
 			}
+		},
+		{
+			"coffee": {
+				"src": [
+					"coffee/components/**/*.coffee",
+					"coffee/styleguide/Styleguide.coffee"
+				],
+				"dest": "js/styleguide",
+				"filename": "script.coffee"
+			},
+			"javascript": {
+				"src": [
+					"js/styleguide/script.js"
+				],
+				"dest": "../site/styleguide/assets/js",
+				"filename": "script.toolkit.js"
+			}
 		}
 	],
 
-	"sass": [
+	"styles": [
 		{
 			"src": ["scss/style.scss"],
 			"dest": "../site/dev/assets/css"
+		},
+		{
+			"src": ["scss/style.toolkit.scss"],
+			"dest": "../site/styleguide/assets/css"
 		}
 	],
 
@@ -86,7 +107,7 @@
 			},
 			"styles": {
 				"fabricator": "../src/styleguide/fabricator/styles/fabricator.scss",
-				"toolkit": "../src/styleguide/toolkit/assets/styles/toolkit.scss"
+				"toolkit": "../src/scss/style.toolkit.scss"
 			},
 			"images": "../src/styleguide/toolkit/assets/images/**/*",
 			"views": "../src/styleguide/toolkit/views/*.html",

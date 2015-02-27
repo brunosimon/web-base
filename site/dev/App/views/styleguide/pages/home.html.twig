@@ -1,0 +1,21 @@
+{% extends "styleguide/default/layout.html.twig" %}
+
+{% block content %}
+
+{{ test }}
+{% for item in data %}
+	
+	<ul>
+		<li>
+			<p class="folder-name">{{ item.dir }}</p>
+			<ul>
+			{% for file in item.files %}
+				<li>{{ file.name }}</li>
+			{% endfor %}
+			</ul>
+		</li>
+	</ul>
+
+{% endfor %}
+
+{% endblock %}
