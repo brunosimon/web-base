@@ -1,18 +1,12 @@
 {
-  "name": "EOS",
+  "name": "WebBase",
   "version": "0.0.1",
-  "description": "Eos front",
+  "description": "Web base for web projects",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "jquery": "^2.1.3"
-  },
+  "author": "Maxime Sarri",
   "devDependencies": {
     "browser-sync": "^2.0.1",
+    "browserify": "^9.0.3",
     "change-case": "^2.2.0",
     "cheerio": "^0.18.0",
     "coffee-script": "^1.7.1",
