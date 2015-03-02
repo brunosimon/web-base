@@ -1,27 +1,31 @@
-// -------------------------o Imports fonts
-
 $fontPath : '../fonts/';
 
 @include importFont('Open Sans', 'OpenSans-Bold', 400, normal, $fontPath);
 @include importFont('Open Sans', 'OpenSans-Regular', 700, normal, $fontPath);
 
+
+/**
+* 	@section fonts
+*/ 
+
 $font-family: 'Open Sans', 'Helvetica', sans-serif;
 $font-text: 'Open Sans', 'Times', serif;
 
 
-// -------------------------o Imports colors
+/**
+* 	@section main colors
+*/ 
 
-// --> Colors start
-
-// @part Primary Colors
 $white 				: #FFFFFF;
 $black 				: #000000;
 
 $grey-white			: #F7F7F7;
 
 
-// @part Template Colors
+/**
+* 	@section template colors
+*/ 
+
 $bg-color 			: $grey-white;
 
-// --> Colors end
 
