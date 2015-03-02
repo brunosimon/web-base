@@ -92,43 +92,31 @@ gulp.task 'styl', () =>
 
 		variables.push(part)
 
+	# ------------------------------------------------o get icons
+
+	icons = []
+	for i in [0...devices.length]
+
+		part = {}
+
+		device = devices[i]
+		iconsList = fs.readdirSync( '../src/sprite/' + device + '/x1' ).filter( junk.not )
+		for j in [0...icons.length]
+			iconsList[j] = iconsList[j].replace(/\.[^\.]*$/, '')
+
+		part.device = device
+		part.icons = iconsList
+
+		icons.push(part)
+
+
+
+
+
 	# ------------------------------------------------o add content to data twig template
 
 	content = '{% set components = ' + JSON.stringify(components) + ' %}'
 	content += '{% set colors = ' + JSON.stringify(variables) + ' %}'
+	content += '{% set icons = ' + JSON.stringify(icons) + ' %}'
 	content += '{% block layout %}{% endblock %}' 					# needed to set `data` as a global variable
 	fs.writeFile('../site/dev/App/views/styleguide/partials/data.html.twig', content)
-
-		#console.log header
-
-	#console.log sections
-
-	###
-	colorsContent = scssFile.split('// --> Colors start')[1].split('// --> Colors end')[0]
-	comments = colorsContent.match(/\/\/ @part(.*)\n/gm)
-	colorsList = colorsContent.replace(/\/\/ @part(.*)\n/gm, '').replace(/\s/gm, '').split(').filter((elm) => return elm != '')
-
-	colors = []
-
-	for i in [0...comments.length]
-		part = {}
-		part.name = comments[i].replace('// @part ','').replace('\n', '')
-		part.colors = []
-
-		partColors = colorsList[i].split(/[;:]/).filter((elm) => return elm != '')
-
-		for j in [0...partColors.length] by 2
-			color = {}
-			color.name = partColors[j]
-			color.val = partColors[j + 1]
-			part.colors.push(color)
-
-		colors.push(part)
-	
-
-	console.log colors
-	###
-
-
-	###
-	###

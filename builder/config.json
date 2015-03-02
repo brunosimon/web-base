@@ -28,7 +28,7 @@
 		},
 		{
 			"coffee": {
-				"src": [
+				"src": [ 
 					"coffee/components/**/*.coffee",
 					"coffee/styleguide/Styleguide.coffee"
 				],
@@ -59,7 +59,10 @@
 	"sprite": [
 		{
 			"type": "png",
-			"src": ["sprite/x1/**/*.png"],
+			"src": [
+				"sprite/shared/x1/**/*.png",
+				"sprite/desktop/x1/**/*.png"
+			],
 			"dest": "../site/dev/assets/img/sprite",
 			"cssDest": "scss/desktop/",
 			"filename": "sprite.png",

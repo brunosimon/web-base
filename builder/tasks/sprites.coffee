@@ -20,8 +20,12 @@ gulp.task 'sprites', ->
 
 		sprite = config.sprite[j]
 
+		src = []
+		for j in [0...sprite.src.length]
+			src.push(config.src + sprite.src[j])
+
 		if sprite.type == 'png'
-			spriteData = gulp.src(config.src + sprite.src)
+			spriteData = gulp.src( src )
 				.pipe(spritesmith({
 					imgName: sprite.filename
 					cssName: sprite.stylename

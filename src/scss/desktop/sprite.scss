@@ -1,12 +1,30 @@
 $values: (
+  sprite-example-2: (
+    src: '/../site/dev/assets/img/sprite/sprite.png',
+    x: -501px,
+    y: 0px,
+    width: 500px,
+    height: 500px,
+    spriteWidth: 1001px,
+    spriteHeight: 1001px
+  ),
+  sprite-example-3: (
+    src: '/../site/dev/assets/img/sprite/sprite.png',
+    x: 0px,
+    y: -501px,
+    width: 500px,
+    height: 500px,
+    spriteWidth: 1001px,
+    spriteHeight: 1001px
+  ),
   sprite-example: (
     src: '/../site/dev/assets/img/sprite/sprite.png',
     x: 0px,
     y: 0px,
     width: 500px,
     height: 500px,
-    spriteWidth: 500px,
-    spriteHeight: 500px
+    spriteWidth: 1001px,
+    spriteHeight: 1001px
   ),
 );
 
